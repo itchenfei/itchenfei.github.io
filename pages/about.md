@@ -3,7 +3,7 @@ layout: mypost
 title: 关于我
 ---
 
-> Hello 陌生人，欢迎访问 ITchenfei Blog
+> Hello 陌生人，欢迎访问 itchenfei Blog
 
 该博客托管于 GitHub Page
 
