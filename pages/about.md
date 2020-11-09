@@ -19,6 +19,6 @@ title: 关于我
 
 - QQ&nbsp;&nbsp;&nbsp;&nbsp;: 563920215
 
-- Email&nbsp;: [tmaize@qq.com](http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=vYiLjoSPjY_MiP3MzJPe0tA)
+- Email&nbsp;: [563920215@qq.com](http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=vYiLjoSPjY_MiP3MzJPe0tA)
 
 - GitHub: [https://github.com/itchenfei](https://github.com/itchenfei)
