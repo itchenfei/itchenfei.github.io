@@ -4,7 +4,7 @@ date: 2022-03-30 19:30:05
 tags: [pyserial]
 categories: python
 ---
-[TOC]
+
 
 # serial与pyserial
 
