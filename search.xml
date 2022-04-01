@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/03/30/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Pyserial的基础用法</title>
+    <url>/2022/03/30/pyserial-in-detail/</url>
+    <content><![CDATA[<h1 id="serial与pyserial"><a href="#serial与pyserial" class="headerlink" title="serial与pyserial"></a>serial与pyserial</h1><h2 id="出现原因"><a href="#出现原因" class="headerlink" title="出现原因"></a>出现原因</h2><p><strong>ModuleNotFoundError: No module named ‘serial’</strong></p>
+<p>新的环境导入serial运行时候会出现<code>ModualNotFoundError</code>,习惯<code>pip install serial</code>。</p>
+<p>安装完成后又会出现如下提示：</p>
+<p><strong>AttributeError: module ‘serial’ has no attribute ‘Serial’</strong></p>
+<p>其实是我们装错了库，应该装的是pyserial，不过pyserial库的方法和serial库正好重名了。</p>
+<p>serial库是一个序列化/反序列化json和yaml文件的库，跟我们的串口操作无关。</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><ol>
+<li><p>卸载serial库，后卸载pyserial库</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip uninstall serial -y</span><br></pre></td></tr></table></figure></li>
+<li><p>关闭命令行窗口！必要，刷新命令行环境。</p>
+</li>
+<li><p>重新安装pyserial库</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pyserial -y</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="串口打开"><a href="#串口打开" class="headerlink" title="串口打开"></a>串口打开</h1><p>Windows上串口名称一般类似COM1，Linux上串口名称一般类似/dev/ttyUSB1</p>
+<h2 id="使用参数默认打开端口"><a href="#使用参数默认打开端口" class="headerlink" title="使用参数默认打开端口"></a>使用参数默认打开端口</h2><p>使用Python打开串口进行通信仅需要实例化<code>serial.Serial</code>类。</p>
+<p>实例化<code>Serial</code>类需要传入串口名称，波特率，超时时间。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial  <span class="comment"># 导入Pyserial的serial</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用波特率115200，超时时间0.8，打开端口名称是COM3的端口</span></span><br><span class="line">s = serial.Serial(<span class="string">&#x27;COM3&#x27;</span>, baudrate=<span class="number">115200</span>, timeout=<span class="number">0.8</span>)</span><br><span class="line"><span class="built_in">print</span>(s.is_open)</span><br></pre></td></tr></table></figure>
+
+<h2 id="手动配置串口后打开"><a href="#手动配置串口后打开" class="headerlink" title="手动配置串口后打开"></a>手动配置串口后打开</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial  <span class="comment"># 导入Pyserial的serial</span></span><br><span class="line"></span><br><span class="line">s = serial.Serial()  <span class="comment"># 实例化Serial类，但是不传参数</span></span><br><span class="line">s.port = <span class="string">&#x27;COM3&#x27;</span>  <span class="comment"># 设置打开的端口为COM3</span></span><br><span class="line">s.baudrate = <span class="number">115200</span>  <span class="comment"># 设置波特率115200</span></span><br><span class="line">s.timeout = <span class="number">0.8</span>  <span class="comment"># 设置超时时间0.8</span></span><br><span class="line"><span class="built_in">print</span>(s.is_open)  <span class="comment"># False 默认未打开</span></span><br><span class="line">s.<span class="built_in">open</span>()  <span class="comment"># 打开配置好的端口</span></span><br><span class="line"><span class="built_in">print</span>(s.is_open)  <span class="comment"># True 已经手动打开</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="编码和解码"><a href="#编码和解码" class="headerlink" title="编码和解码"></a>编码和解码</h1><p>当我们在PyCharm输入并保存为<code>test.py</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- encoding=utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这个print语句就是Unicode字符串，当我们保存这个py文件时，系统会将文件内容编译成utf-8格式的字节码，然后保存编译后的字节码到硬盘，这个过程就是编码(encode)过程；</p>
+<p>当计算机读取<code>test.py</code>时，如果在test.py的文件头部看到编码的类型，则会使用指定的编码类型进行解码，这里使用的是使用指定的 <code>utf-8</code>编码格式进行解码，这个读取文件的过程其实就是解码(decode)的过程。</p>
+<p>Python3如果不指定编码和解码格式，默认都是utf-8格式。</p>
+<p>串口也需要进行编码和解码：</p>
+<ol>
+<li>在将字符串写入串口之前，首先要将字符串(encode)编译成为utf-8格式的字节码</li>
+<li>从串口中读取数据之后，使用utf-8将字节码解码(decode)成为原始的字符串</li>
+</ol>
+<h1 id="串口的写入"><a href="#串口的写入" class="headerlink" title="串口的写入"></a>串口的写入</h1><h2 id="一般AT指令的写入"><a href="#一般AT指令的写入" class="headerlink" title="一般AT指令的写入"></a>一般AT指令的写入</h2><p>在我们打开AT、UART或DEBUG口后，可以直接使用write方法写入命令，write命令写入后会返回已经写入的字节数量。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"></span><br><span class="line">s = serial.serial_for_url(<span class="string">&#x27;loop://&#x27;</span>, baudrate=<span class="number">115200</span>, timeout=<span class="number">0</span>)</span><br><span class="line">nums = s.write(<span class="string">&#x27;0123456789&#x27;</span>.encode())</span><br><span class="line"><span class="built_in">print</span>(nums)</span><br></pre></td></tr></table></figure>
+
+<h2 id="控制符的写入"><a href="#控制符的写入" class="headerlink" title="控制符的写入"></a>控制符的写入</h2><p>在某些发送短信等特殊的AT可能需要我们模拟<code>CTRL+Z</code>，我们要写入对应操作的ascii对应的Unicode编码，然后在进行编码，例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"></span><br><span class="line">s = serial.serial_for_url(<span class="string">&#x27;loop://&#x27;</span>, baudrate=<span class="number">115200</span>, timeout=<span class="number">0</span>)</span><br><span class="line">nums = s.write(<span class="built_in">chr</span>(<span class="number">0x1A</span>).encode())</span><br><span class="line"><span class="built_in">print</span>(nums)</span><br></pre></td></tr></table></figure>
+
+<p>具体的对应关系可以参考：</p>
+<p><a href="https://en.wikipedia.org/wiki/ANSI_escape_code">https://en.wikipedia.org/wiki/ANSI_escape_code</a></p>
+<p><a href="https://invisible-island.net/xterm/ctlseqs/ctlseqs.html">https://invisible-island.net/xterm/ctlseqs/ctlseqs.html</a></p>
+<h1 id="串口的读取"><a href="#串口的读取" class="headerlink" title="串口的读取"></a>串口的读取</h1><h2 id="串口的读取方式"><a href="#串口的读取方式" class="headerlink" title="串口的读取方式"></a>串口的读取方式</h2><p>pyserial的串口主要有五种读取方式<code>read</code>、<code>readline</code>、<code>readlines</code>、<code>readall</code>、<code>read_until</code>。</p>
+<p>这里只介绍read和readline。</p>
+<ol>
+<li>read(i=1)，读取i个字节，默认为1</li>
+<li>readline，读取一行数据，一行的判断标准是\n换行符</li>
+</ol>
+<p>读取到的内容需要解码成原始字符串</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"></span><br><span class="line">s = serial.serial_for_url(<span class="string">&#x27;loop://&#x27;</span>, baudrate=<span class="number">115200</span>, timeout=<span class="number">0</span>)</span><br><span class="line">nums = s.write(<span class="string">&quot;0123456789&quot;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>))  <span class="comment"># 将0123456789编码成utf-8格式后，写入串口</span></span><br><span class="line"><span class="built_in">print</span>(s.readline().decode(<span class="string">&#x27;utf-8&#x27;</span>))  <span class="comment"># 从串口中读取一行，并解码成原始的字符串</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="串口读取方式和串口设置的timeout关系"><a href="#串口读取方式和串口设置的timeout关系" class="headerlink" title="串口读取方式和串口设置的timeout关系"></a>串口读取方式和串口设置的timeout关系</h2><p>串口初始化时，timeout有三种设置方式，和read和readline分别有如下的对应关系。</p>
+<ol>
+<li><p>timeout=0.8，这个0.8是任意float类型的数</p>
+<p>a.  read(100)，如果在0.8s内读到了100个字节，直接返回读到的字节；如果超过0.8s，读到多少字节就返回多少字节</p>
+<p>b. readline()，如果0.8秒内读到了\n，则直接返回读到的一行；如果超过0.8s，读到多少字节就返回多少字节</p>
+</li>
+<li><p>timeout=0</p>
+<p>a. read(100)，缓冲buffer内如果200字节，则只返回100字节，如果仅有99字节，则立即返回99字节</p>
+<p>b. readline()，缓冲buffer内如果有\n，则返回到\n，如果没有\n，则返回buffer内的全部内容</p>
+</li>
+<li><p>timeout=None</p>
+<p>a. read(100)，一直读，直到100个字节后返回，如果不到100个字节，则会一直阻塞状态</p>
+<p>b. readline()，一直读，直到读到\n，返回读到内容，如果没有\n，则会一直是阻塞状态</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>pyserial</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows下使用FFmpeg切分视频文件</title>
+    <url>/2022/04/01/windows-ffmpeg-split-video/</url>
+    <content><![CDATA[<h1 id="下载FFMPEG"><a href="#下载FFMPEG" class="headerlink" title="下载FFMPEG"></a>下载FFMPEG</h1><p>从 <a href="http://ffmpeg.org/download.html">http://ffmpeg.org/download.html</a> 官网，选择合适的版本。  </p>
+<p>下面以Windows系统为例。  </p>
+<h1 id="切分视频"><a href="#切分视频" class="headerlink" title="切分视频"></a>切分视频</h1><p>以Windows为例，首先打开下载的<code>ffmpeg-master-latest-win64-gpl.zip</code>压缩包，将<code>ffmpeg.exe</code>文件复制到同一级目录  </p>
+<p>运行下面命令对视频进行切分  </p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">./ffmpeg.exe  -i ./video2511504394.mp4 -vcodec copy -acodec copy -ss 01:30:02 -to 01:59:10 ./cut_1.mp4 -y</span><br></pre></td></tr></table></figure>
+
+<p>参数解释，从左到右：  </p>
+<p>./ffmpeg.exe指定FFMPEG文件为当前目录；<br>-i 指定一个需要切分的视频文件，这里指定的是当前目录下的<code>video2511504394.mp4</code>文件<br>-vcodec copy 表示使用跟原视频一样的视频编解码器<br>-acodec copy 表示使用跟原视频一样的音频编解码器<br>-ss 指定开始剪切的时间点，格式 时/分/秒<br>-to 指定视频结束的时间点，格式 时/分/秒<br>./cut_1.mp4 指定剪切后的视频片段的名称<br>-y 如果指定的名称的文件存在，则覆盖  </p>
+]]></content>
+      <categories>
+        <category>ffmpeg</category>
+      </categories>
+      <tags>
+        <tag>ffmpeg</tag>
+      </tags>
+  </entry>
+</search>

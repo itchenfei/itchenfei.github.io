@@ -1,0 +1,11 @@
+http://example.com/2022/04/01/windows-ffmpeg-split-video/
+http://example.com/2022/03/30/pyserial-in-detail/
+http://example.com/categories/index.html
+http://example.com/about/index.html
+http://example.com/tags/index.html
+http://example.com/2022/03/30/hello-world/
+http://example.com/
+http://example.com/tags/pyserial/
+http://example.com/tags/ffmpeg/
+http://example.com/categories/python/
+http://example.com/categories/ffmpeg/
