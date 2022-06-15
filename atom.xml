@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-04-01T03:38:39.440Z</updated>
+  <updated>2022-06-15T01:41:57.048Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用群晖进行321备份</title>
+    <link href="http://example.com/2022/06/15/%E4%BD%BF%E7%94%A8%E7%BE%A4%E6%99%96%E8%BF%9B%E8%A1%8C321%E5%A4%87%E4%BB%BD/"/>
+    <id>http://example.com/2022/06/15/%E4%BD%BF%E7%94%A8%E7%BE%A4%E6%99%96%E8%BF%9B%E8%A1%8C321%E5%A4%87%E4%BB%BD/</id>
+    <published>2022-06-15T01:38:56.000Z</published>
+    <updated>2022-06-15T01:41:57.048Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="备份321原则"><a href="#备份321原则" class="headerlink" title="备份321原则"></a>备份321原则</h1><p>3：文件至少有3个副本<br>2：2个副本存储在本地不同介质上<br>1：另外1个副本存储在异地设备</p><h1 id="我的群晖的321"><a href="#我的群晖的321" class="headerlink" title="我的群晖的321"></a>我的群晖的321</h1><p>1：使用OneDrive或百度网盘做加密云端备份<br>2：2个硬盘做硬盘镜像备份</p><h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>基于群晖7.1，6.x版本操作步骤可能略有不同。</p><h1 id="怎么做加密云端备份"><a href="#怎么做加密云端备份" class="headerlink" title="怎么做加密云端备份"></a>怎么做加密云端备份</h1><p>使用群晖Cloud Sync可以非常简单的做云端备份，并且可以“加密”。</p><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><ol><li>下载<code>Cloud Sync</code>套件-&gt;打开套件-&gt;点击<code>➕</code>号</li><li>选择<code>MicroSoft OneDriver</code>(根据个人需求选择)-&gt;点击<code>下一步</code></li><li>验证微软账户</li><li>连接名称：选择自己喜欢的名称</li><li>本地路径：选择需要备份的路径，我这里选择/homes/username直接备份整份</li><li>远程路径：选择自己喜欢的远程路径</li><li>同步方向：这里选择双向，本地修改远程也修改</li><li>数据加密勾选(个人觉得没有一家云服务商信得过)</li><li>在<code>计划设置</code>页面-&gt;选择需要备份的时间-&gt;点击<code>下一步</code></li><li>设置密码，在设置了密码之后会下载一个key文件</li><li>点击<code>完成</code>即可进行立即备份</li></ol><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol><li>关于Key.zip文件: 群晖的解密套件可以使用原始密码对加密文件夹和内容解密，所以我的理解是如果你用能记住的密码，可以不需要保存key文件；如果你用随机的密码，则保存key文件才能解开加密后的文件</li><li>上传速度提升：打开Cloud Sync套件后，点击加号右边的齿轮，<code>同时传输的数量</code>选项可以选择多个内容，例如OneDrive单个文件上传慢，这时候多调整下数量，同时15个文件或更多的文件同时上传，就能占满上传的带宽，当然CPU的占用也会增加</li><li>本地删除后远程也删除：这里是小坑，如果在设置内容的时候选择双向，但是本地删除之后远程网盘文件其实并不会删除，在下个同步周期之后会被下载回群晖。所以我们需要打开Cloud Sync套件后，点击加号右边的齿轮，在<code>常规</code>下勾选<code>本地删除的文件将在您的公共云上同步进行删除</code></li></ol><h1 id="怎么做本地硬盘镜像备份"><a href="#怎么做本地硬盘镜像备份" class="headerlink" title="怎么做本地硬盘镜像备份"></a>怎么做本地硬盘镜像备份</h1><p>使用Hyper Backup套件可以很容易完成，Hyper Backup多种备份模式，这里介绍<code>本地文件夹和USB</code>、<code>本地文件夹和USB（单一版本）</code>两种模式。</p><h2 id="两种备份模式的介绍"><a href="#两种备份模式的介绍" class="headerlink" title="两种备份模式的介绍"></a>两种备份模式的介绍</h2><p>本地文件夹和USB(单一版本)：仅仅把原始需要备份文件夹的内容完全拷贝到另一个备份文件夹，没有文件历史存档管理，这里我对备份的软件和视频等不是特别重要的文件设置成此模式。<br>本地文件夹和USB：会保留备份的文件夹的版本，如果你手机今天误删了所有照片并且同步云端也删除了，恰巧你设置了备份，可以从历史版本恢复所有的照片。这里推荐把重要的文件例如照片和工作存档等设置成此模式。</p><h2 id="基础前提"><a href="#基础前提" class="headerlink" title="基础前提"></a>基础前提</h2><p>插入新的硬盘后需要进行三步操作：</p><ol><li>创建存储池：就是把新插入的硬盘格式化</li><li>创建存储空间：相当于给插入的硬盘进行分区</li><li>创建共享文件夹：相当于在<code>存储空间</code>里设置一个保存<code>备份内容的文件夹</code>。</li></ol><h3 id="创建存储池"><a href="#创建存储池" class="headerlink" title="创建存储池"></a>创建存储池</h3><ol><li>关机-&gt;插入新硬盘-&gt;后开机（这里保险起见，默认所有设备不支持热插拔）</li><li>打开<code>存储管理器</code>套件-&gt;点击<code>存储空间</code>-&gt;点击<code>创建</code>-&gt;选择<code>创建存储池</code>-&gt;按照提示设置添加存储池，注意存储池类型选择<code>Basic</code>，文件系统推荐选择<code>Btrfs</code></li></ol><h3 id="创建存储空间"><a href="#创建存储空间" class="headerlink" title="创建存储空间"></a>创建存储空间</h3><ol><li>打开<code>存储管理器套件</code>-&gt;点击<code>存储空间</code>-&gt;选择刚刚添加好的存储池-&gt;点击<code>创建</code>-&gt;点击<code>创建存储空间</code></li><li>根据提示内容创建好存储空间，推荐存储空间设置为整个硬盘</li></ol><h3 id="创建共享文件夹"><a href="#创建共享文件夹" class="headerlink" title="创建共享文件夹"></a>创建共享文件夹</h3><ol><li>打开<code>控制面板</code>-&gt;点击<code>共享文件夹</code>-&gt;点击<code>新增</code>-&gt;点击<code>新增</code></li><li>名称：设置想要的名称，这里设置为<code>backup</code></li><li>描述：填写合适的描述，可以不填</li><li>所在位置：选择刚刚<code>新建的存储池</code>的<code>新建的存储空间</code></li><li>启用回收站：可以不勾选，节省空间</li><li>点击下一步, 在加密界面选择加密或者不加密</li><li>启用数据综合检查码以实现高级数据完整性：推荐勾选</li><li>空间配额：根据自行喜好设置或者不设置</li><li>下一步下一步..点击应用，其中有权限相关设置根据喜好</li></ol><p>这样一个<code>名为backup的共享文件夹</code>就创建好了。</p><h2 id="操作步骤-1"><a href="#操作步骤-1" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="本地文件夹和USB（单一版本）"><a href="#本地文件夹和USB（单一版本）" class="headerlink" title="本地文件夹和USB（单一版本）"></a>本地文件夹和USB（单一版本）</h3><ol><li>安装<code>Hyper Backup</code>套件-&gt;点击<code>➕</code>-&gt;选择<code>数据备份任务</code></li><li>选择<code>本地文件夹和USB（单一版本）</code>-&gt;点击<code>下一步</code></li><li>共享文件夹选择设置的<code>backup</code>文件夹(选择你自己的共享文件夹，一定要确认共享文件夹是不同的硬盘上，可以在<code>控制面板</code>-&gt;<code>共享文件夹</code>里查看)-&gt;点击<code>下一步</code></li><li>选择需要备份的内容，这里我单一版本选择了/homes/username的整个目录，点击<code>下一步</code></li><li>选择需要备份的应用程序相关文件-&gt;点击<code>下一步</code></li><li>进入了<code>备份设置</code>后基本不用修改，如有需要根据个人需求设置，后续也可以在HyperBackup中修改</li><li>点击完成则创建了备份任务。</li></ol><h3 id="本地文件夹和USB"><a href="#本地文件夹和USB" class="headerlink" title="本地文件夹和USB"></a>本地文件夹和USB</h3><ol><li>安装<code>Hyper Backup</code>套件-&gt;点击<code>➕</code>-&gt;选择<code>数据备份任务</code></li><li>选择<code>本地文件夹和USB</code>-&gt;点击<code>下一步</code></li><li><code>创建备份任务</code>-&gt;共享文件夹选择<code>backup</code>-&gt;目录可以不用修改，之后可以在设置修改-&gt;点击<code>下一步</code></li><li>在<code>数据备份</code>页面选则备份内容，这里我选择的内容是<code>/homes/username/Photos</code>-&gt;点击<code>下一步</code></li><li>选择需要备份的应用程序相关文件-&gt;点击<code>下一步</code></li><li>在<code>备份设置</code>后基本不用修改，如有需要根据个人需求设置，后续也可以在HyperBackup中修改-&gt;点击<code>下一步</code></li><li>点击<code>完成</code>即可</li></ol><h1 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h1><h2 id="病毒攻击"><a href="#病毒攻击" class="headerlink" title="病毒攻击"></a>病毒攻击</h2><p>如果群晖被加密病毒勒索，其实上面的321还是需要进一步的优化。<br>目前存储时间是每天凌晨进行备份，如果没有及时停止备份任务，云端的文件可能也会受到影响。所以备份间隔可以设置37或14这样备份？虽然OneDrive有类似的快照，但是还是不能完全放心的</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;备份321原则&quot;&gt;&lt;a href=&quot;#备份321原则&quot; class=&quot;headerlink&quot; title=&quot;备份321原则&quot;&gt;&lt;/a&gt;备份321原则&lt;/h1&gt;&lt;p&gt;3：文件至少有3个副本&lt;br&gt;2：2个副本存储在本地不同介质上&lt;br&gt;1：另外1个副本存储在异地设备</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Windows下使用FFmpeg切分视频文件</title>
