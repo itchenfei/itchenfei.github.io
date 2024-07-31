@@ -5,4 +5,3 @@
 # URLs
 1. PageSpeed Insights: https://pagespeed.web.dev/
 2. Theme Documentation: https://theme-next.js.org/docs/getting-started/
-3. Ref: https://finisky.github.io/responsivehexonext/
