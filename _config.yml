@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 陈飞的博客
+title: Fei's Blog
 subtitle: ''
 description: ''
 keywords:
-author: Fei Chen
-language: en
+author: Fei
+language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
