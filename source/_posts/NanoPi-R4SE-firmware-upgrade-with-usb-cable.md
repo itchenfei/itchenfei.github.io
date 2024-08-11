@@ -1,5 +1,5 @@
 ---
-title: NanoPi R4SE firmware upgrade
+title: NanoPi R4SE 使用USB线进行固件升级
 date: 2024-08-11 22:14:19
 tags: SBC
 ---
@@ -28,17 +28,17 @@ NanoPi R4SE提供百度网盘和Google Drive两种下载方式，选择一种即
 2. 卡针按住Mask，接通电源，等待3S后松手，PWR灯常亮，其他灯长灭，如果不是此状态，重复1~2步
 3. 接USB线到第一个口
 4. 系统设备管理器会加载 Class for rockusb devices
-![device](./NanoPi-R4SE-firmware-upgrade-with-usb-cable/class_for_rockusb_devices.png)
+![device](class_for_rockusb_devices.png)
 
 # 升级固件
 1. 解压rk3399-usb-friendlywrt-23.05-docker-20231031.zip包
 2. 在解压后的在文件夹内找到RKDevTool.exe，双击运行
 3. 在弹出的页面中点击执行
-![upgrade.png](./NanoPi-R4SE-firmware-upgrade-with-usb-cable/upgrade.png)
+![upgrade.png](upgrade.png)
 4. 等待升级完成后，设备会自动重启
 
 # 连接设备
 1. 准备一条网线，连接NanoPi R4SE的LAN口和PC
 2. PC端打开命令行，输入ipconfig, 查看以太网适配器以太网的IPv4地址，等待出现如图IP为192.168.2.1的网络接口
-![nic.png](./NanoPi-R4SE-firmware-upgrade-with-usb-cable/nic.png)
-3. 打开网页端，输入`192.168.2.1`，进入配置，初始用户名密码为`root`和`password`
+![nic.png](nic.png)
+3. 打开网页端，输入`192.168.2.1`，进入LuCi页面配置，初始用户名密码为`root`和`password`
